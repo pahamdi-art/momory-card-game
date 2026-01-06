@@ -1,0 +1,95 @@
+<!--
+The prompt : from claude
+
+at the beginning of the game i want all images to be shown for some seconds depending on the difficulty also make limit of moves and time also depending on the difficulty level
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Game</title>
+    <link rel="stylesheet" href="sheet.css">
+</head>
+<body class="light">
+    <div class="container">
+        <!-- Main Menu Page -->
+        <div id="mainPage" class="page active">
+            <h1>MEMORY GAME</h1>
+            <button class="menu-btn" onclick="showPage('settingsPage')">SETTINGS</button>
+            <button class="menu-btn" onclick="showPage('difficultyPage')">DIFFICULTY</button>
+            <button class="menu-btn exit-btn" onclick="exitGame()">EXIT</button>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settingsPage" class="page">
+            <h1>SETTINGS</h1>
+            <div class="option-group">
+                <h3>SOUND</h3>
+                <button class="option-btn selected" onclick="selectOption(this, 'sound')">ON</button>
+                <button class="option-btn" onclick="selectOption(this, 'sound')">OFF</button>
+            </div>
+            <div class="option-group">
+                <h3>MUSIC</h3>
+                <button class="option-btn selected" onclick="selectOption(this, 'music')">ON</button>
+                <button class="option-btn" onclick="selectOption(this, 'music')">OFF</button>
+            </div>
+            <div class="option-group">
+                <h3>THEME</h3>
+                <button class="option-btn selected" onclick="changeTheme('light', this)">LIGHT</button>
+                <button class="option-btn" onclick="changeTheme('dark', this)">DARK</button>
+                <button class="option-btn" onclick="changeTheme('colorful', this)">COLORFUL</button>
+            </div>
+            <button class="menu-btn back-btn" onclick="showPage('mainPage')">BACK</button>
+        </div>
+
+        <!-- Difficulty Page -->
+        <div id="difficultyPage" class="page">
+            <h1>DIFFICULTY</h1>
+            <div class="option-group">
+                <button class="option-btn" onclick="selectOption(this, 'difficulty')" data-difficulty="easy" data-pairs="6" data-preview="5" data-moves="20" data-time="120">EASY (6 PAIRS)</button>
+                <button class="option-btn selected" onclick="selectOption(this, 'difficulty')" data-difficulty="medium" data-pairs="8" data-preview="4" data-moves="25" data-time="90">MEDIUM (8 PAIRS)</button>
+                <button class="option-btn" onclick="selectOption(this, 'difficulty')" data-difficulty="hard" data-pairs="12" data-preview="3" data-moves="30" data-time="120">HARD (12 PAIRS)</button>
+                <button class="option-btn" onclick="selectOption(this, 'difficulty')" data-difficulty="extreme" data-pairs="15" data-preview="2" data-moves="35" data-time="150">EXTREME (15 PAIRS)</button>
+            </div>
+            <button class="menu-btn start-btn" onclick="startGame()">START GAME</button>
+            <button class="menu-btn back-btn" onclick="showPage('mainPage')">BACK</button>
+        </div>
+
+        <!-- Game Page -->
+        <div id="gamePage" class="page">
+            <h1>MEMORY GAME</h1>
+            <div class="game-container">
+                <div class="game-stats">
+                    <div class="stat" id="movesContainer">MOVES: <span id="moves">0</span>/<span id="maxMoves">25</span></div>
+                    <div class="stat" id="timerContainer">TIME: <span id="timer">0</span>/<span id="maxTime">90</span>s</div>
+                </div>
+                <div id="gameBoard" class="game-board medium"></div>
+                <button class="menu-btn back-btn" onclick="showPage('mainPage'); resetGame();">QUIT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewMessage" class="preview-message">
+        <div>MEMORIZE!</div>
+        <div id="previewCounter" style="font-size: 3em; margin-top: 10px;">3</div>
+    </div>
+
+    <div id="winMessage" class="win-message">
+        <h2>YOU WIN!</h2>
+        <p>Moves: <span id="finalMoves"></span></p>
+        <p>Time: <span id="finalTime"></span>s</p>
+        <button class="menu-btn" onclick="hideWin(); startGame();" style="margin-top: 20px;">PLAY AGAIN</button>
+        <button class="menu-btn back-btn" onclick="hideWin(); showPage('mainPage'); resetGame();">MAIN MENU</button>
+    </div>
+
+    <div id="loseMessage" class="lose-message">
+        <h2>GAME OVER!</h2>
+        <p id="loseReason"></p>
+        <button class="menu-btn" onclick="hideLose(); startGame();" style="margin-top: 20px;">TRY AGAIN</button>
+        <button class="menu-btn back-btn" onclick="hideLose(); showPage('mainPage'); resetGame();">MAIN MENU</button>
+    </div>
+    <script src="java_script.js"></script>
+</body>
+</html>
