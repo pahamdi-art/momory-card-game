@@ -9,8 +9,35 @@ let maxMoves = 25;
 let maxTime = 90;
 let totalPairs = 8;
 
-const emojis = ['🎮', '🎲', '🎯', '🎨', '🎭', '🎪', '🎸', '🎹', '🎺', '🎻', '🎤', '🎧', '🎬', '🎼', '🏀', '⚽', '🎾', '🏈', '⚾', '🏐'];
+let img_list = []
+const img_list_a = []
+const img_list_b = []
+const img_list_c = []
 
+let ig = "b"
+
+for (let i = 1; i < 15 ;i++ ){
+    img_list_a.push(`images/MARIO/img${i}.png`)
+    img_list_b.push(`images/SONIC/img${i}.png`)
+    img_list_c.push(`images/MINECRAFT/img${i}.png`)
+}
+
+img_list = img_list_b
+
+function set_img(str) {
+    if (str === "a") {
+        img_list = img_list_a
+    }
+    else if (str === "b") {
+        img_list = img_list_b
+    }
+    else if (str === "c") {
+        img_list = img_list_c
+    }
+    else {
+        img_list = img_list_b
+    }
+}
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
@@ -25,6 +52,7 @@ function selectOption(btn, group) {
 
 function changeTheme(theme, btn) {
     document.body.className = theme;
+    ig = theme
     const buttons = btn.parentElement.querySelectorAll('.option-btn');
     buttons.forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
@@ -40,6 +68,7 @@ function exitGame() {
 }
 
 function startGame() {
+    set_img(ig)
     const selectedDifficulty = document.querySelector('#difficultyPage .option-btn.selected');
     const difficulty = selectedDifficulty.dataset.difficulty;
     const pairs = parseInt(selectedDifficulty.dataset.pairs);
@@ -59,22 +88,25 @@ function startGame() {
 }
 
 function setupGame(difficulty, pairs) {
+
     const gameBoard = document.getElementById('gameBoard');
     gameBoard.className = `game-board ${difficulty}`;
     gameBoard.innerHTML = '';
     
-    const selectedEmojis = emojis.slice(0, pairs);
+    const selectedEmojis = img_list.slice(0, pairs);
     cards = [...selectedEmojis, ...selectedEmojis];
     shuffleArray(cards);
     
-    cards.forEach((emoji, index) => {
+    cards.forEach((img, index) => {
         const card = document.createElement('div');
         card.className = 'card';
         card.dataset.index = index;
-        card.dataset.emoji = emoji;
+        card.dataset.value = img;
         card.innerHTML = `
             <div class="card-back"></div>
-            <div class="card-front">${emoji}</div>
+            <div class="card-front">
+                <img src="${img}" alt="card">
+            </div>
         `;
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
@@ -84,20 +116,13 @@ function setupGame(difficulty, pairs) {
 function showPreview(seconds) {
     const allCards = document.querySelectorAll('.card');
     allCards.forEach(card => card.classList.add('preview'));
-    
-    const previewMsg = document.getElementById('previewMessage');
-    const previewCounter = document.getElementById('previewCounter');
-    previewMsg.classList.add('show');
-    previewCounter.textContent = seconds;
-    
+
     let countdown = seconds;
     const countdownInterval = setInterval(() => {
         countdown--;
-        previewCounter.textContent = countdown;
-        
+
         if (countdown <= 0) {
             clearInterval(countdownInterval);
-            previewMsg.classList.remove('show');
             allCards.forEach(card => card.classList.remove('preview'));
             canFlip = true;
             startTimer();
@@ -136,7 +161,7 @@ function flipCard() {
 function checkMatch() {
     const [card1, card2] = flippedCards;
     
-    if (card1.dataset.emoji === card2.dataset.emoji) {
+    if (card1.dataset.value === card2.dataset.value) {
         card1.classList.add('matched');
         card2.classList.add('matched');
         matchedPairs++;
