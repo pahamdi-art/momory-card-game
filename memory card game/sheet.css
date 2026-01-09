@@ -218,6 +218,7 @@ h1 {
     font-size: 2em;
     transition: all 0.1s;
     position: relative;
+    overflow: hidden; /* FIX */
 }
 
 .card:hover {
@@ -342,4 +343,5 @@ h1 {
 @keyframes bounce {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
     50% { transform: translate(-50%, -50%) scale(1.1); }
+
 }
