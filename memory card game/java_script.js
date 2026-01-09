@@ -16,7 +16,7 @@ const img_list_c = []
 
 let ig = "b"
 
-for (let i = 1; i < 15 ;i++ ){
+for (let i = 1; i < 16 ;i++ ){
     img_list_a.push(`images/MARIO/img${i}.png`)
     img_list_b.push(`images/SONIC/img${i}.png`)
     img_list_c.push(`images/MINECRAFT/img${i}.png`)
@@ -245,4 +245,5 @@ function gameLose(reason) {
 
 function hideLose() {
     document.getElementById('loseMessage').classList.remove('show');
+
 }
