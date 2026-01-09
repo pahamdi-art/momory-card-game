@@ -14,7 +14,7 @@ const img_list_a = []
 const img_list_b = []
 const img_list_c = []
 
-let ig = "b"
+let ig = "a"
 
 for (let i = 1; i < 16 ;i++ ){
     img_list_a.push(`images/MARIO/img${i}.png`)
@@ -22,7 +22,7 @@ for (let i = 1; i < 16 ;i++ ){
     img_list_c.push(`images/MINECRAFT/img${i}.png`)
 }
 
-img_list = img_list_b
+img_list = img_list_a
 
 function set_img(str) {
     if (str === "a") {
@@ -247,3 +247,4 @@ function hideLose() {
     document.getElementById('loseMessage').classList.remove('show');
 
 }
+
